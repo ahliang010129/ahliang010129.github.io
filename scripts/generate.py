@@ -8,7 +8,7 @@ def fetch_finished_matches():
     resp = requests.get(url, params={"id": LEAGUE_ID}, timeout=30)
     resp.raise_for_status()
     events = resp.json().get("events") or []
-    cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=24)
+    cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=720)
     fresh = []
     for e in events:
         try:
