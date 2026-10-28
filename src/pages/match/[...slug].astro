@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const matches = await getCollection('matches');
+  return matches.map(m => ({
+    params: { slug: m.slug },
+    props: { match: m }
+  }));
+}
+
+const { match } = Astro.props;
+const { data, body } = match;
+---
+<html lang="zh">
+<head>
+  <title>{data.title}</title>
+</head>
+<body>
+  <article>
+    <h1>{data.title}</h1>
+    <p>{data.home} <strong>{data.homeScore} - {data.awayScore}</strong> {data.away}</p>
+    <div set:html={body} />
+  </article>
+</body>
+</html>
