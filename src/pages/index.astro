@@ -34,7 +34,9 @@ matches.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
     <div class="grid">
       {matches.map(m => (
         <a href={`/match/${m.slug}/`} class="card">
-          <div class="card-league">{m.data.league || '未知联赛'}</div>
+          <div class="card-league">
+  {m.data.sport || '体育'} · {m.data.league || ''}
+</div>
           <h2 class="card-title">{m.data.title}</h2>
           <div class="card-score">
             {m.data.home} {m.data.homeScore} - {m.data.awayScore} {m.data.away}
