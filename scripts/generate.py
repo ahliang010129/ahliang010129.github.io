@@ -2,15 +2,11 @@ import os, json, requests, datetime
 
 GEMINI_KEY = os.environ["GEMINI_API_KEY"]
 
-# 这里我配置了多个联赛的 ID（TheSportsDB 的免费接口支持）
-# 4328: 英超, 4335: 西甲, 4332: 意甲
-# 4387: NBA, 4516: CBA (篮球)
-# 4424: 英雄联盟 LEC (电竞，免费版可能数据较少)
+# 抓取联赛的配置
 LEAGUE_IDS = ["4328", "4335", "4332", "4387"]
 
 def fetch_finished_matches():
     all_fresh_matches = []
-    # 把时间放宽到 720 小时（30天），方便测试
     cutoff = datetime.datetime.utcnow() - datetime.timedelta(hours=720)
     
     for league_id in LEAGUE_IDS:
@@ -31,7 +27,6 @@ def fetch_finished_matches():
             
     return all_fresh_matches
 
-# AI 提示词升级：让它根据联赛名称自动适配运动术语
 SYSTEM_PROMPT = """你是资深体育战报作者。你需要根据输入的【事实清单】写一篇赛事战报。
 
 【第一步：判断运动类型】
@@ -64,7 +59,7 @@ def generate_article(event):
         "away_score": event.get("intAwayScore"),
         "date": event.get("dateEvent"),
         "league": event.get("strLeague"),
-        "sport": event.get("strSport", "Soccer"), # 足球 / Basketball 等
+        "sport": event.get("strSport", "Soccer"),
         "venue": event.get("strVenue")
     }
     payload = {
@@ -80,7 +75,6 @@ def generate_article(event):
 def write_markdown(article, event):
     slug = article["slug"]
     os.makedirs("src/content/matches", exist_ok=True)
-    # 这里我们多加了一个 sport 字段
     frontmatter = f"""---
 title: "{article['title']}"
 date: {event.get('dateEvent') or datetime.date.today().isoformat()}
@@ -100,3 +94,35 @@ venue: "{event.get('strVenue') or ''}"
         with open(path, "w", encoding="utf-8") as f:
             f.write(frontmatter)
         print(f"生成成功: {article['title']}")
+
+# ==========================================
+# 主运行入口：这里我写死了两条测试数据
+# ==========================================
+if __name__ == "__main__":
+    # 强制注入两条数据：一条足球，一条篮球
+    test_events = [
+        {
+            "strEvent": "曼城 vs 阿森纳",
+            "strHomeTeam": "曼城", "strAwayTeam": "阿森纳",
+            "intHomeScore": "2", "intAwayScore": "1",
+            "dateEvent": "2026-10-28", "strLeague": "英格兰超级联赛",
+            "strSport": "Soccer", "strVenue": "伊蒂哈德球场"
+        },
+        {
+            "strEvent": "湖人 vs 勇士",
+            "strHomeTeam": "洛杉矶湖人", "strAwayTeam": "金州勇士",
+            "intHomeScore": "112", "intAwayScore": "108",
+            "dateEvent": "2026-10-28", "strLeague": "NBA",
+            "strSport": "Basketball", "strVenue": "斯台普斯中心"
+        }
+    ]
+
+    print("开始执行测试生成任务...")
+    for event in test_events:
+        try:
+            print(f"正在让 AI 写 {event.get('strEvent')} 的战报...")
+            article = generate_article(event)
+            write_markdown(article, event)
+            print(f"生成成功: {article['title']}")
+        except Exception as e:
+            print(f"生成失败: {e}")
