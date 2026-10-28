@@ -4,7 +4,7 @@ const matches = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    date: z.string(),
+    date: z.coerce.date(),
     home: z.string(),
     away: z.string(),
     homeScore: z.number(),
