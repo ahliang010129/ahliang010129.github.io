@@ -10,6 +10,7 @@ const matches = defineCollection({
     homeScore: z.number(),
     awayScore: z.number(),
     league: z.string().optional(),
+    sport: z.string().optional(), // 新增
     venue: z.string().optional(),
   }),
 });
