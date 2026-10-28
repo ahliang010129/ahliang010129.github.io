@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+const matches = await getCollection('matches');
+---
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>我的体育战报</title>
+</head>
+<body>
+  <h1>最新比赛战报</h1>
+  <ul>
+    {matches.map(m => (
+      <li>
+        <a href={`/match/${m.slug}/`}>{m.data.title}</a>
+      </li>
+    ))}
+  </ul>
+</body>
+</html>
