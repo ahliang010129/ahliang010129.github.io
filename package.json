@@ -7,7 +7,6 @@
     "build": "astro build"
   },
   "dependencies": {
-    "astro": "^4.16.0",
-    "@astrojs/sitemap": "^3.1.6"
+    "astro": "^4.16.0"
   }
 }
