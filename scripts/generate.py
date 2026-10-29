@@ -45,7 +45,7 @@ def generate_article(event):
         "contents": [{"parts": [{"text": SYSTEM_PROMPT + "\n\n【事实清单】\n" + json.dumps(facts, ensure_ascii=False, indent=2)}]}],
         "generationConfig": {"temperature": 0.4, "responseMimeType": "application/json"}
     }
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={GEMINI_KEY}"
     resp = requests.post(url, json=payload, timeout=60)
     
     # 如果 API 报错，打印出具体的错误
