@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: kaiyun818/kaiyun818.github.io
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "matches"
+    label: "比赛战报"
+    folder: "src/content/matches"
+    create: true
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "日期", name: "date", widget: "datetime" }
+      - { label: "主队", name: "home", widget: "string" }
+      - { label: "客队", name: "away", widget: "string" }
+      - { label: "主队得分", name: "homeScore", widget: "number" }
+      - { label: "客队得分", name: "awayScore", widget: "number" }
+      - { label: "联赛", name: "league", widget: "string", required: false }
+      - { label: "运动类型", name: "sport", widget: "string", required: false }
+      - { label: "场地", name: "venue", widget: "string", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
