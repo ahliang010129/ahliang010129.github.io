@@ -1,0 +1,34 @@
+media: public/images
+content:
+  - name: matches
+    label: 比赛战报
+    path: src/content/matches
+    type: file
+    fields:
+      - name: title
+        label: 标题
+        type: string
+      - name: date
+        label: 日期
+        type: date
+      - name: home
+        label: 主队
+        type: string
+      - name: away
+        label: 客队
+        type: string
+      - name: homeScore
+        label: 主队得分
+        type: number
+      - name: awayScore
+        label: 客队得分
+        type: number
+      - name: league
+        label: 联赛
+        type: string
+      - name: sport
+        label: 运动类型
+        type: string
+      - name: body
+        label: 正文
+        type: rich-text
