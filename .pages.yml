@@ -32,6 +32,9 @@ content:
       - name: venue
         label: 场地
         type: string
+      - name: image
+        label: 封面图片
+        type: image
       - name: body
         label: 正文
         type: rich-text
