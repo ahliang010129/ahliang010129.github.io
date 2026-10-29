@@ -2,6 +2,7 @@ media: public/images
 content:
   - name: matches
     label: 比赛战报
+    type: collection
     path: src/content/matches
     fields:
       - name: title
