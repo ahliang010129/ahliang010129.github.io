@@ -86,14 +86,12 @@ venue: "{event.get('strVenue') or ''}"
         print(f"✅ 成功生成文件: {slug}.md")
 
 if __name__ == "__main__":
-    test_events = [
-        {"strEvent": "曼城 vs 阿森纳", "strHomeTeam": "曼城", "strAwayTeam": "阿森纳", "intHomeScore": "2", "intAwayScore": "1", "dateEvent": "2026-10-28", "strLeague": "英格兰超级联赛", "strSport": "Soccer", "strVenue": "伊蒂哈德球场"},
-        {"strEvent": "湖人 vs 勇士", "strHomeTeam": "洛杉矶湖人", "strAwayTeam": "金州勇士", "intHomeScore": "112", "intAwayScore": "108", "dateEvent": "2026-10-28", "strLeague": "NBA", "strSport": "Basketball", "strVenue": "斯台普斯中心"}
-    ]
-    for event in test_events:
+    print("开始自动抓取真实比赛数据...")
+    # 自动去网络抓取过去 30 天的比赛（足、篮等）
+    for event in fetch_finished_matches():
         try:
-            print(f"正在处理: {event['strEvent']}...")
+            print(f"正在生成战报: {event.get('strEvent')}")
             article = generate_article(event)
             write_markdown(article, event)
         except Exception as e:
-            print(f"❌ 处理失败 {event['strEvent']}: {e}")
+            print(f"跳过 {event.get('strEvent')}: {e}")
