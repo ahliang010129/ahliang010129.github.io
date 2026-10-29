@@ -74,7 +74,7 @@ matches.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
     .card { background: var(--card); border: 1px solid #1a365d; border-radius: 12px; padding: 24px; transition: 0.3s; display: flex; flex-direction: column; }
     .card:hover { transform: translateY(-5px); border-color: var(--gold); }
     
-    /* 新增：卡片封面图样式 */
+    /* 卡片封面图样式 */
     .card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; }
     
     .card-league { font-size: 12px; color: var(--gold); font-weight: bold; margin-bottom: 10px; }
@@ -168,13 +168,19 @@ matches.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
     <div class="grid">
       {matches.map(m => (
         <a href={`/match/${m.slug}/`} class="card">
-          {/* 关键修改：如果有图片就渲染出来 */}
-          {m.data.image && <img src={m.data.image} alt={m.data.title} class="card-img" />}
+          {/* 关键修改：如果有图片就渲染，并清洗掉可能存在的 public 前缀 */}
+          {m.data.image && <img src={m.data.image.replace('/public', '').replace('public', '')} alt={m.data.title} class="card-img" />}
           
           <div class="card-league">{m.data.sport || '体育'} · {m.data.league || '赛事'}</div>
           <h2 class="card-title">{m.data.title}</h2>
+          
+          {/* 兼容逻辑：有比分显示比分，没比分显示“战报” */}
           <div class="card-score">
-            {m.data.home} {m.data.homeScore} - {m.data.awayScore} {m.data.away}
+            {m.data.homeScore !== undefined && m.data.awayScore !== undefined ? (
+              <>{m.data.home} {m.data.homeScore} - {m.data.awayScore} {m.data.away}</>
+            ) : (
+              <>{m.data.home || '赛事'} 战报</>
+            )}
           </div>
         </a>
       ))}
