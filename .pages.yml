@@ -3,7 +3,6 @@ content:
   - name: matches
     label: 比赛战报
     path: src/content/matches
-    type: file
     fields:
       - name: title
         label: 标题
@@ -28,6 +27,9 @@ content:
         type: string
       - name: sport
         label: 运动类型
+        type: string
+      - name: venue
+        label: 场地
         type: string
       - name: body
         label: 正文
