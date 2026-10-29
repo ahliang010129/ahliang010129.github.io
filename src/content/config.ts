@@ -5,13 +5,14 @@ const matches = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    home: z.string(),
-    away: z.string(),
-    homeScore: z.number(),
-    awayScore: z.number(),
+    home: z.string().optional(),
+    away: z.string().optional(),
+    homeScore: z.number().optional(),
+    awayScore: z.number().optional(),
     league: z.string().optional(),
-    sport: z.string().optional(), // 新增
+    sport: z.string().optional(),
     venue: z.string().optional(),
+    image: z.string().optional(), // 新增图片字段支持
   }),
 });
 
